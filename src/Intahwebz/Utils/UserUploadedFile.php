@@ -20,10 +20,10 @@ class UserUploadedFile {
 		$this->size = $size;
 
 		$this->determineContentType();
-		$this->determineFolder();
+		//$this->determineFolder();
 	}
 
-	function getNormalizedFILES(){
+	static function getNormalizedFILES(){
 		$newFiles = array();
 		foreach($_FILES as $fieldName => $fieldValue){
 			foreach($fieldValue as $paramName => $paramValue){
