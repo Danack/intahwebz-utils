@@ -5,7 +5,7 @@ namespace Intahwebz\Utils;
 
 class Utils {
 
-	var $knownMimeTypesForExtensions = array(
+	static public $knownMimeTypesForExtensions = array(
 		"amr" => "audio/amr",
 		"apk" => "application/vnd.android.package-archive",
 		"3gp"  =>	"video/3gpp",

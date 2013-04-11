@@ -127,7 +127,7 @@ class UserUploadedFile {
 		else{
 			if($files[$formFileName]['error'] == UPLOAD_ERR_OK) {
 				if(is_uploaded_file($files[$formFileName]['tmp_name']) ){
-					logToFileDebug("File [$formFileName] looks valid details are ".getVar_DumpOutput($files[$formFileName]));
+					//logToFileDebug("File [$formFileName] looks valid details are ".getVar_DumpOutput($files[$formFileName]));
 
 					return new UserUploadedFile(
 						$files[$formFileName]['name'],
@@ -145,7 +145,6 @@ class UserUploadedFile {
 			}
 		}
 	}
-
 }
 
 
