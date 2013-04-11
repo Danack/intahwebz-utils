@@ -1,0 +1,18 @@
+{
+	"name": "intahwebz/utils",
+	"description": "Collection of utility PHP classes for intahwebz development.",
+	"keywords": ["intahwebz", "library"],
+	"autoload": {
+		"psr-0": {
+			"Intahwebz": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Dan Ackroyd",
+			"email": "Danack@basereality.com",
+			"homepage": "http://www.basereality.com"
+		}
+	]
+
+}
