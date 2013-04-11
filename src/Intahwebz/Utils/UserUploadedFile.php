@@ -1,57 +1,9 @@
 <?php
 
-namespace Intahwebz\Storage;
+namespace Intahwebz\Utils;
 
-define('STORAGE_PATH_IMAGE', 'images');
-define('STORAGE_PATH_BINARY', "files");
-
-
-
-function getFileUploadErrorMeaning($errorCode){
-
-	switch($errorCode){
-		case (UPLOAD_ERR_OK):{ //no error; possible file attack!
-			return "There was a problem with your upload.";
-		}
-		case (UPLOAD_ERR_INI_SIZE): {//uploaded file exceeds the upload_max_filesize directive in php.ini
-			return "The file you are trying to upload is too big.";
-		}
-		case (UPLOAD_ERR_FORM_SIZE):{ //uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form
-			return "The file you are trying to upload is too big.";
-		}
-		case UPLOAD_ERR_PARTIAL: {//uploaded file was only partially uploaded
-			//Todo - allow partial uploads
-			return 	"The file you are trying upload was only partially uploaded.";
-		}
-		case (UPLOAD_ERR_NO_FILE): {//no file was uploaded
-			return 	"You must select a file for upload.";
-		}
-
-		//TODO - handle these
-//			UPLOAD_ERR_NO_TMP_DIR
-//			UPLOAD_ERR_CANT_WRITE
-//			UPLOAD_ERR_EXTENSION
-
-		default: {	//a default error, just in case!  :)
-		return	"There was a problem with your upload.";
-		}
-	}
-}
-
-
-
-
-function getNormalizedFILES(){
-	$newFiles = array();
-	foreach($_FILES as $fieldName => $fieldValue){
-		foreach($fieldValue as $paramName => $paramValue){
-			foreach((array)$paramValue as $index => $value){
-				$newFiles[$fieldName][$paramName] = $value;
-			}
-		}
-	}
-	return $newFiles;
-}
+//define('STORAGE_PATH_IMAGE', 'images');
+//define('STORAGE_PATH_BINARY', "files");
 
 
 class UserUploadedFile {
@@ -71,24 +23,68 @@ class UserUploadedFile {
 		$this->determineFolder();
 	}
 
-	/**
-	 * @return string Is used in Javascript (somewhere?)
-	 */
-	function    determineFolder() {
-		switch ($this->contentType) {
-			case "image/jpeg":
-			case "image/gif":
-			case "image/png":{
-				$this->folder = STORAGE_PATH_IMAGE;
-				return $this->folder;
+	function getNormalizedFILES(){
+		$newFiles = array();
+		foreach($_FILES as $fieldName => $fieldValue){
+			foreach($fieldValue as $paramName => $paramValue){
+				foreach((array)$paramValue as $index => $value){
+					$newFiles[$fieldName][$paramName] = $value;
+				}
+			}
+		}
+		return $newFiles;
+	}
+
+	function getFileUploadErrorMeaning($errorCode){
+
+		switch($errorCode){
+			case (UPLOAD_ERR_OK):{ //no error; possible file attack!
+				return "There was a problem with your upload.";
+			}
+			case (UPLOAD_ERR_INI_SIZE): {//uploaded file exceeds the upload_max_filesize directive in php.ini
+				return "The file you are trying to upload is too big.";
+			}
+			case (UPLOAD_ERR_FORM_SIZE):{ //uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form
+				return "The file you are trying to upload is too big.";
+			}
+			case UPLOAD_ERR_PARTIAL: {//uploaded file was only partially uploaded
+				//Todo - allow partial uploads
+				return 	"The file you are trying upload was only partially uploaded.";
+			}
+			case (UPLOAD_ERR_NO_FILE): {//no file was uploaded
+				return 	"You must select a file for upload.";
 			}
 
-			default:{
-				$this->folder = STORAGE_PATH_BINARY;
-				return $this->folder;
+			//TODO - handle these
+//			UPLOAD_ERR_NO_TMP_DIR
+//			UPLOAD_ERR_CANT_WRITE
+//			UPLOAD_ERR_EXTENSION
+
+			default: {	//a default error, just in case!  :)
+				return	"There was a problem with your upload.";
 			}
 		}
 	}
+
+//TODO - Remove project specific code
+//	/**
+//	 * @return string Is used in Javascript (somewhere?)
+//	 */
+//	function    determineFolder() {
+//		switch ($this->contentType) {
+//			case "image/jpeg":
+//			case "image/gif":
+//			case "image/png":{
+//				$this->folder = STORAGE_PATH_IMAGE;
+//				return $this->folder;
+//			}
+//
+//			default:{
+//				$this->folder = STORAGE_PATH_BINARY;
+//				return $this->folder;
+//			}
+//		}
+//	}
 
 	function	determineContentType(){
 
@@ -97,7 +93,7 @@ class UserUploadedFile {
 		if($this->contentType == FALSE){
 			if(array_key_exists('extension', $pathInfo) == TRUE){
 				try{
-					$contentType = getMimeType(strtolower($pathInfo['extension']));
+					$contentType = Utils::getMimeTypeForFileExtension(strtolower($pathInfo['extension']));
 					$this->contentType = $contentType;
 				}
 				catch(UnknownMimeType $umt){
@@ -121,7 +117,7 @@ class UserUploadedFile {
 	static function getUserUploadedFile($formFileName){
 		//logToFileDebug("getUploadedFileInfo");
 
-		$files = getNormalizedFILES();
+		$files = self::getNormalizedFILES();
 
 		if(isset($files[$formFileName]) == FALSE){
 			//logToFileDebug_var($files);
@@ -144,8 +140,8 @@ class UserUploadedFile {
 				}
 			}
 			else{
-				var_dump($files);
-				throw new FileUploadException("Error detected in upload: ".getFileUploadErrorMeaning($files[$formFileName]['error']));
+				//var_dump($files);
+				throw new FileUploadException("Error detected in upload: ".self::getFileUploadErrorMeaning($files[$formFileName]['error']));
 			}
 		}
 	}
