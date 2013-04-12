@@ -6,6 +6,9 @@ namespace Intahwebz\Utils;
 //define('STORAGE_PATH_BINARY', "files");
 
 
+require_once "functions.php";
+
+
 class UserUploadedFile {
 
 	var $name;
@@ -144,6 +147,71 @@ class UserUploadedFile {
 				throw new FileUploadException("Error detected in upload: ".self::getFileUploadErrorMeaning($files[$formFileName]['error']));
 			}
 		}
+	}
+
+
+
+	/**
+	 * @param $imageURL
+	 * @return UserUploadedFile
+	 */
+	function	getImageFromLink($imageURL){
+
+		/*$fileTest = tempnam(sys_get_temp_dir(), "imageLink");
+		//$fileTest = sys_get_temp_dir()."/fark.txt";
+
+		$filehandle = fopen($fileTest, "w");
+
+		if($filehandle == false){
+			echo "Failed to open ".$fileTest."\n".getcwd();
+			exit(0);
+		}
+		fwrite($filehandle, "Hello");
+		fclose($filehandle); */
+
+		$tempFilename = tempnam(sys_get_temp_dir(), 'Tux');
+
+		$fileHandle = fopen($tempFilename, 'w+');
+
+		$headerArray = curlDownloadFileAndReturnHeaders($imageURL, $fileHandle);
+
+		$urlInfo = parse_url($imageURL);
+
+		$fileInfo = array();
+
+		foreach($headerArray as $headerKey => $headerValue){
+			if(strcasecmp('Content-type', $headerKey) == 0 ||
+				strcasecmp('content_type', $headerKey) == 0){
+				$fileInfo['contentType'] = $headerValue;
+			}
+		}
+
+		$lastSlashPosition = strrpos($urlInfo['path'], '/');
+
+		if($lastSlashPosition === FALSE){
+			$filename = $urlInfo['path'];
+		}
+		else{
+			$filename = substr($urlInfo['path'], $lastSlashPosition + 1);//+1 to exclude the slash
+		}
+
+		if(strlen($filename) == 0){
+			$filename = date("Y_m_d_H_i_s");
+			//Cannot guess image type from made up file name.
+
+			if(array_key_exists('contentType', $fileInfo) == TRUE){
+				$extension = getFileExtension($fileInfo['contentType']);
+				$filename .= ".".$extension;
+			}
+		}
+
+		fclose($fileHandle);
+
+		return new UserUploadedFile(
+			$filename,
+			$tempFilename,
+			filesize($tempFilename)
+		);
 	}
 }
 
