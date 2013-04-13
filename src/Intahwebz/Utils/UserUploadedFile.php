@@ -155,7 +155,7 @@ class UserUploadedFile {
 	 * @param $imageURL
 	 * @return UserUploadedFile
 	 */
-	function	getImageFromLink($imageURL){
+	static function	getImageFromLink($imageURL){
 
 		/*$fileTest = tempnam(sys_get_temp_dir(), "imageLink");
 		//$fileTest = sys_get_temp_dir()."/fark.txt";

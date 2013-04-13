@@ -48,7 +48,7 @@ class Utils {
 	}
 
 
-	function getFileExtensionForMimeType($mimeType){
+	public static function getFileExtensionForMimeType($mimeType){
 		$mimeType = strtolower($mimeType);
 		$arrayKey = array_search ($mimeType, self::$knownMimeTypesForExtensions);
 
