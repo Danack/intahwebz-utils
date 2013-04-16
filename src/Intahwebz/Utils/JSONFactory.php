@@ -2,13 +2,17 @@
 
 namespace Intahwebz\Utils;
 
-trait JSONFactory{
+//define('OBJECT_TYPE', 'x-objectType');
+
+require_once "functions.php";
+
+trait JSONFactory {
 
 	static function factory($data){
 		$object = new static();
 
 		foreach ($data AS $key => $value){
-			if($key != 'ObjectType'){
+			if($key != OBJECT_TYPE){
 				$object->$key = $value;
 			}
 		}
@@ -17,20 +21,61 @@ trait JSONFactory{
 	}
 
 	static function	fromJSON($jsonString){
-		$data = json_decode($jsonString);
-
-		if(array_key_exists('ObjectType', $data) == TRUE){
-			//Could do sanity check on type here.
-			unset($data['ObjectType']);
-		}
-
-		return self::factory($data);
+		return json_decode_object($jsonString);
+		//return self::fromJSON($jsonData);
 	}
 
+
+//	static function fromJSON($jsonString){
+
+
+
+//		$data = array();
+//
+//		foreach ($jsonData as $key => $value) {
+//			if (is_array($value) == true) {
+//				if (array_key_exists(OBJECT_TYPE, $value) == true) {
+//					$className = $value[OBJECT_TYPE];
+//					$value = $className::fromJSON($value);
+//				}
+//				else {
+//					$value = self::fromJSON($value);
+//				}
+//			}
+//
+//			$data[$key] = $value;
+//		}
+//
+//		if (array_key_exists(OBJECT_TYPE, $jsonData) == true) {
+//			$objectType = $jsonData[OBJECT_TYPE];
+//			$object = $objectType::factory($data);
+//			return $object::factory($jsonData);
+//		}
+//		else {
+//			return $data;
+//		}
+//	}
+
+//	static function hydrate($jsonString) {
+//		$data = json_decode_object($jsonString, true);
+//
+//		$objectType = $data[OBJECT_TYPE];
+//
+////		if(array_key_exists(OBJECT_TYPE, $data) == TRUE){
+////			//Could do sanity check on type here.
+////			unset($data[OBJECT_TYPE]);
+////		}
+//
+//		unset($data[OBJECT_TYPE]);
+//
+//		$object = $objectType::factory($data);
+//
+//		return $object;
+//	}
+
+
 	function	toJSON(){
-		$classInfo = parse_classname(get_class($this));
-		$className = $classInfo['classname'];
-		return json_encode_object($this, $className);
+		return json_encode_object($this);//, $className);
 	}
 
 	function	jumpToJS(){
