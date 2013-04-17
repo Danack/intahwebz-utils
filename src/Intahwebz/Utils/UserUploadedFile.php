@@ -38,7 +38,7 @@ class UserUploadedFile {
 		return $newFiles;
 	}
 
-	function getFileUploadErrorMeaning($errorCode){
+	static function getFileUploadErrorMeaning($errorCode){
 
 		switch($errorCode){
 			case (UPLOAD_ERR_OK):{ //no error; possible file attack!
