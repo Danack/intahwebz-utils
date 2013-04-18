@@ -42,7 +42,7 @@ function json_encode_object_internal($object){
 		else if (is_array($value) == true) {
 			$arrayValues = array();
 			foreach ($value as $arrayKey => $arrayValue) {
-				$arrayValues[$arrayKey] = $arrayValue;
+				$arrayValues[$arrayKey] = json_encode_object_internal($arrayValue);
 			}
 			$value = $arrayValues;
 		}
