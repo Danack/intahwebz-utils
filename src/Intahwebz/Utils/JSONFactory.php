@@ -2,8 +2,6 @@
 
 namespace Intahwebz\Utils;
 
-//define('OBJECT_TYPE', 'x-objectType');
-
 require_once "functions.php";
 
 trait JSONFactory {

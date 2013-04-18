@@ -24,8 +24,6 @@ function json_encode_object_internal($object){
 
 	$params = array();
 
-	//$type = false;
-
 	if (is_object($object) == true) {
 		$traits = class_uses($object);
 		if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
@@ -38,7 +36,6 @@ function json_encode_object_internal($object){
 		if (is_object($value) == true) {
 			$traits = class_uses($value);
 			if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
-				//$className = get_class($value);
 				$value = json_encode_object_internal($value);
 			}
 		}
@@ -73,13 +70,7 @@ function json_decode_object_internal($jsonData){
 
 	foreach ($jsonData as $key => $value) {
 		if (is_array($value) == true) {
-//			if (array_key_exists(OBJECT_TYPE, $value) == true) {
-//				$className = $value[OBJECT_TYPE];
-//				$value = $className::factory($value);
-//			}
-//			else {
-				$value = json_decode_object_internal($value);
-//			}
+			$value = json_decode_object_internal($value);
 		}
 
 		$data[$key] = $value;

@@ -2,10 +2,6 @@
 
 namespace Intahwebz\Utils;
 
-//define('STORAGE_PATH_IMAGE', 'images');
-//define('STORAGE_PATH_BINARY', "files");
-
-
 require_once "functions.php";
 
 
