@@ -10,7 +10,9 @@ trait JSONFactory {
 		$object = new static();
 
 		foreach ($data AS $key => $value){
-			if($key != OBJECT_TYPE){
+			//TODO - figure out what to do about defines in other files for PHP-to-javascript converter.
+			//if($key != OBJECT_TYPE){
+			if($key != 'x-objectType'){
 				$object->$key = $value;
 			}
 		}
