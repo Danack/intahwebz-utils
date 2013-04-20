@@ -36,6 +36,7 @@ function json_encode_object_internal($object){
 
 	if (is_object($object) == true) {
 		$traits = class_uses_deep($object);
+		//TODO - should we just encode all objects? i.e. fail on decode rather than encode?
 		if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
 			$type = get_class($object);
 			$params[OBJECT_TYPE] = $type;
