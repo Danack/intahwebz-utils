@@ -33,7 +33,7 @@ trait JSONFactory {
 		$output = "\n";
 
 		//TODO - this shouldn't be hardcoded.
-		$output .= "window.contentFilterData = createContentObject(json_decode('".$jsonString."'));\n";
+		$output .= "window.contentFilterData = createContentObject(json_decode('".addslashes($jsonString)."'));\n";
 		return $output;
 	}
 }
