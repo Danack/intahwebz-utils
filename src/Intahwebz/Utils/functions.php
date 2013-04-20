@@ -11,6 +11,16 @@ function parse_classname($name){
 	);
 }
 
+function class_uses_deep($class, $autoload = true) {
+	$traits = [];
+	do {
+		$traits = array_merge(class_uses($class, $autoload), $traits);
+	} while($class = get_parent_class($class));
+	foreach ($traits as $trait => $same) {
+		$traits = array_merge(class_uses($trait, $autoload), $traits);
+	}
+	return array_unique($traits);
+}
 
 /**
  * Return a JSON string for all of the public variables of an object.
@@ -25,7 +35,7 @@ function json_encode_object_internal($object){
 	$params = array();
 
 	if (is_object($object) == true) {
-		$traits = class_uses($object);
+		$traits = class_uses_deep($object);
 		if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
 			$type = get_class($object);
 			$params[OBJECT_TYPE] = $type;
