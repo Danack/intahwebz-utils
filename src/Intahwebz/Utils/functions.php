@@ -55,7 +55,9 @@ function json_encode_object_internal($object){
 
 function json_encode_object($object){
 	$params = json_encode_object_internal($object);
-	return json_encode($params, JSON_HEX_APOS|JSON_PRETTY_PRINT);
+	//return json_encode($params, JSON_HEX_APOS|JSON_PRETTY_PRINT);
+	//Cannot use pretty print - it breaks Javascript :(
+	return json_encode($params, JSON_HEX_APOS);
 }
 
 
@@ -79,7 +81,7 @@ function json_decode_object_internal($jsonData){
 	if (array_key_exists(OBJECT_TYPE, $jsonData) == true) {
 		$objectType = $jsonData[OBJECT_TYPE];
 		$object = $objectType::factory($data);
-		return $object;//$object::factory($jsonData);
+		return $object;
 	}
 	else {
 		return $data;
