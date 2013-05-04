@@ -3,6 +3,10 @@
 
 namespace Intahwebz\Utils;
 
+use Intahwebz\Utils\UnknownFileType;
+use Intahwebz\Utils\UnknownMimeType;
+
+
 class Utils {
 
 	static public $knownMimeTypesForExtensions = array(
@@ -23,6 +27,7 @@ class Utils {
 		"mpg"  =>	"video/mpeg",
 		"mpeg" =>	"video/mpeg",
 		"pdf"  =>	"application/pdf",
+		"php"  =>	"application/x-php",
 		"png"  =>	"image/png",
 		"smil" =>	"application/smil",
 		"swf"  =>	"application/x-shockwave-flash",
@@ -57,6 +62,10 @@ class Utils {
 		}
 
 		return self::$knownMimeTypesForExtensions[$mimeType];
+	}
+
+	public static function setFileType($extension, $mimeType) {
+		self::$knownMimeTypesForExtensions[$extension] = $mimeType;
 	}
 }
 
