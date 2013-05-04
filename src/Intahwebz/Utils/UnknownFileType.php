@@ -4,7 +4,7 @@
 namespace Intahwebz\Utils;
 
 
-class UnknownMimeType extends \Exception {
+class UnknownFileType extends \Exception {
 
 	var  $fileType = null;
 
