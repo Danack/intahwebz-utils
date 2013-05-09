@@ -10,10 +10,10 @@ trait Singleton{
 	/**
 	 * @return static
 	 */
-	public static function getInstance(){
+	public static function getInstance($data = array()){
 		if(static::$instance == null){
 			$newInstance = new self();
-			$newInstance->initInstance();
+			$newInstance->initInstance($data);
 
 			static::$instance = $newInstance;
 		}
