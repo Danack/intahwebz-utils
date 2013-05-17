@@ -31,37 +31,23 @@ function class_uses_deep($class, $autoload = true) {
  * @return string
  */
 function json_encode_object_internal($object){
+	if (is_object($object) == true || is_array($object) == true) {
+		$params = array();
 
-	$params = array();
-
-	if (is_object($object) == true) {
-		$traits = class_uses_deep($object);
-		//TODO - should we just encode all objects? i.e. fail on decode rather than encode?
-		if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
+		if (is_object($object) == true) {
 			$type = get_class($object);
 			$params[OBJECT_TYPE] = $type;
 		}
-	}
 
-	foreach ($object as $key => $value) {
-		if (is_object($value) == true) {
-			$traits = class_uses($value);
-			if (in_array('Intahwebz\\Utils\\JSONFactory', $traits)) {
-				$value = json_encode_object_internal($value);
-			}
-		}
-		else if (is_array($value) == true) {
-			$arrayValues = array();
-			foreach ($value as $arrayKey => $arrayValue) {
-				$arrayValues[$arrayKey] = json_encode_object_internal($arrayValue);
-			}
-			$value = $arrayValues;
+		foreach ($object as $key => $value) {
+			$value = json_encode_object_internal($value);
+			$params[$key] = $value;
 		}
 
-		$params[$key] = $value;
+		return $params;
 	}
 
-	return $params;
+	return $object;
 }
 
 function json_encode_object($object){
