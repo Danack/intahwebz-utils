@@ -40,6 +40,7 @@ class Utils {
 		"mid"	=>	"audio/mid",
 		"mp3"	=>	"audio/mpeg",
 		"m4a"	=>	"audio/mp4",
+		"md"	=> "text/markdown",
 		"mov"	=>	"video/quicktime",
 		"mp3"	=>	"audio/mpeg",
 		"mp4"	=>	"video/mp4",
