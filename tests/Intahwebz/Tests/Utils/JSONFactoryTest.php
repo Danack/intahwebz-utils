@@ -8,7 +8,7 @@ use Intahwebz\Tests\Utils\IntahwebzUtilsTestCase;
 use Intahwebz\Tests\Utils\JSONFactoryImplementation;
 
 
-class JSONFactoryTest extends IntahwebzUtilsTestCase {
+class JSONFactoryTest extends \PHPUnit_Framework_TestCase {
 
 	public function testConversion() {
 		$testObject = new JSONFactoryImplementation();
