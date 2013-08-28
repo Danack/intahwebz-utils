@@ -243,4 +243,3 @@ function	setSortedColours($smarty, $colorNameArray){
 }
 
 
-?>

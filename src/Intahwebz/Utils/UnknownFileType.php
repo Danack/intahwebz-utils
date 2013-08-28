@@ -18,5 +18,3 @@ class UnknownFileType extends \Exception {
 	}
 }
 
-
-?>

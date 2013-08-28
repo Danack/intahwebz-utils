@@ -8,4 +8,3 @@ class FileUploadException extends \Exception {
 
 }
 
-?>

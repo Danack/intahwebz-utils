@@ -29,5 +29,3 @@ function	curlDownloadFileAndReturnHeaders($url, $fileHandle){
 }
 
 
-
-?>

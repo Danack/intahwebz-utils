@@ -7,5 +7,3 @@ trait StandardClass{
 	use Singleton;
 }
 
-
-?>

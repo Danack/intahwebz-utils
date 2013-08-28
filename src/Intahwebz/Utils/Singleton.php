@@ -26,7 +26,3 @@ trait Singleton{
 
 
 
-
-
-
-?>

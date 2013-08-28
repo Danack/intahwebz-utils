@@ -18,5 +18,3 @@ class UnknownMimeType extends \Exception {
 	}
 }
 
-
-?>
