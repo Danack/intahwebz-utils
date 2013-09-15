@@ -21,6 +21,7 @@ class Utils {
 		"avi"	=>	"video/x-msvideo",
 		"bmp"	=>	"image/x-ms-bmp",
 		"bz2"	=>	"application/x-bzip2",
+        "conf"  => "text/plain",
 		"css"	=>	"text/css",
 		"csv"	=>	"text/comma-separated-values",
 		"doc"	=>	"application/msword",
